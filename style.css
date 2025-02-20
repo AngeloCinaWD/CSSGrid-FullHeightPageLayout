@@ -1,0 +1,104 @@
+* {
+  margin: 0;
+  padding: 0;
+  box-sizing: border-box;
+}
+
+body {
+  font-family: system-ui, sans-serif;
+  font-size: 1rem;
+  line-height: 1.7;
+  color: #161616;
+  background-color: #f3f3f3;
+
+  /* aggiungendo la property min-block-size definisco l'altezza minima del blocco, dando come valore 100vh e 100dvh avrò la una altezza full responsive */
+  min-block-size: 100vh;
+  min-block-size: 100dvh;
+
+  /* il grid sarà il container grid */
+  display: grid;
+  /* per definire le colonne che compongono la mia griglia utilizzo la property grid-template-columns, a questa passo la proprietà repeat() che accetta 2 parametri: il numero di colonne e la larghezza*/
+  /* posso creare un pattern per le colonne, ad es. 4 colonne 100px e 200px, vuol dire che la prima e la seconda colonna saranno 100 e 200px, la terza e quarta ripetono il pattern dimensionale, sranno rispettivamente 100px e 200px di larghezza */
+  /* grid-template-columns: repeat(4, 100px 200px); */
+  /* in questo modo definisco 2 colonne: la prima di 5rem di larghezza e la seconda di 1fr */
+  /* 1fr è  1 frazione dello spazio disponibile, quindi la prima colonna è 80px, la seconda tutto lo spazio disponibile*/
+  /* grid-template-columns: 5rem 1fr; */
+  /* quindi se aggiungo una terza colonna di 2fr avrei la prima colonna di 80px, la seconda e la terza si dividerebbero lo spazio disponibile rimanente, una un terzo dello spazio e l'altra 2 terzi (lo spazio verrebbe diviso in 3 frazioni) */
+  /* grid-template-columns: 5rem 1fr 2fr; */
+  /* per definire le righe utilizzo la property grid-template-rows */
+
+  /* definisco una griglia con 2 colonne e 3 righe con dimensione fissa */
+  grid-template-columns: 5rem 1fr;
+  /* una volta definita la min-block-size posso far calcolare le rows automaticamente */
+  /* grid-template-rows: 100px 200px 100px; */
+  grid-template-rows: auto 1fr auto;
+
+  /* con la proprietà grid-template-areas definisco come gli elementi occupanop lo spazio nella griglia */
+  /* gli dico che l'area chiamata header deve occupare tutte e 2 le colonne e la prima riga */
+  /* l'area sidebar sarà nella seconda riga (quindi alta 200px) e nella prima colonna (quindi larga 5rem) */
+  /* l'area main sarà nella seconda riga (quindi alta 200px) e nella seconda colonna (quindi larga 1fr) */
+  /* gli dico che l'area chiamata footer deve occupare tutte e 2 le colonne e la terza riga */
+  /* le aree vanno assegnate tramite proprietà grid-area all'elemento corrispondente */
+  grid-template-areas:
+    'header header'
+    'sidebar main'
+    'footer footer';
+
+  /* voglio che la sidebar parta dalla prima riga */
+  grid-template-areas:
+    'sidebar header'
+    'sidebar main'
+    'footer footer';
+
+  /* aggiungo una transition in modo da avere un effetto di scorrimento quando espando la sidebar */
+  transition: grid-template-columns 0.3s ease;
+}
+
+/* classe .sb-expand, riscrive le properties precedentemente assegnate */
+body.sb-expand {
+  /* dico che la prima colonna deve avere una larghezza maggiore*/
+  grid-template-columns: 12.5rem 1fr;
+}
+
+.dashboard-header {
+  background-color: #fff;
+  padding: 1.25rem;
+  /* l'elemento con la classe .header corrisponderà all'area header */
+  grid-area: header;
+}
+.dashboard-footer {
+  background-color: #fff;
+  padding: 1.25rem;
+  grid-area: footer;
+}
+.dashboard-main {
+  padding: 1.25rem;
+  grid-area: main;
+}
+
+.dashboard-sidebar {
+  color: #fff;
+  background-color: #1d1d29;
+  grid-area: sidebar;
+  position: relative;
+}
+
+.dashboard-sidebar button {
+  position: absolute;
+  /* The inset CSS property is a shorthand that corresponds to the top, right, bottom, and/or left properties. It has the same multi-value syntax of the margin shorthand. */
+  inset: 4.5rem -0.75rem auto auto;
+  width: 1.5rem;
+  aspect-ratio: 1;
+  background-color: #fff;
+  border: transparent;
+  border-radius: 50%;
+  cursor: pointer;
+}
+
+.logo {
+  display: flex;
+  justify-content: center;
+  align-items: center;
+  font-size: 3rem;
+  line-height: 1.3;
+}
